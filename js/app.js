@@ -1,7 +1,3 @@
-// article about static
-//https://learn.javascript.ru/static-properties-methods
-
-
 
 /* Book Constructor */
 function Book(name, author, isbn) {
@@ -33,7 +29,11 @@ UI.prototype.addBookToList = function (book) {
 };
 
 // Clear fields
-UI.prototype.clearFields = function () {};
+UI.prototype.clearFields = function () {
+  document.querySelector("#title").value = "";
+  document.querySelector("#author").value = "";
+  document.querySelector("#isbn").value = "";
+};
 
 /* Event Listeners */
 document.getElementById("book-form").addEventListener("submit", (e) => {

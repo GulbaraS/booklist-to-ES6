@@ -1,7 +1,7 @@
 
 /* Book Constructor */
-function Book(name, author, isbn) {
-  this.name = name;
+function Book(title, author, isbn) {
+  this.title = title;
   this.author = author;
   this.isbn = isbn;
 };
@@ -38,10 +38,25 @@ UI.prototype.clearFields = function () {
 /* Event Listeners */
 document.getElementById("book-form").addEventListener("submit", (e) => {
   // Get form values
+  const title = document.querySelector("#title").value;
+  const author = document.querySelector("#author").value;
+  const isbn = document.querySelector("#isbn").value;
+
+  if (title === "" || author === "" || isbn === "") {
+    alert ("Please fill all fields!");
+  }  else {
   // Instance of book
+    const book = new Book(title, author, isbn);
+
   // Instance of UI
+  const ui = new UI();
+
   // Add book to list
+  ui.addBookToList(book);
+
   // Clear fields
+  ui.clearFields();
+  }
 
   // Prevent actual submit
   e.preventDefault();

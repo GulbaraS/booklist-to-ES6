@@ -16,3 +16,8 @@
   color: red;
   text-decoration: none;
 }
+.delete-msg {
+  padding: 5px;
+  background-color: rgb(236, 99, 122);
+  color: white;
+}

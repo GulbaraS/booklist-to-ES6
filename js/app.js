@@ -66,6 +66,7 @@ UI.prototype.deleteBook = function(el) {
 document.querySelector("#book-list").addEventListener("click", (el) => {
  const ui = new UI();
  ui.deleteBook(el.target);
+ ui.showAlert("Book deleted", "delete-msg");
  
 });
 

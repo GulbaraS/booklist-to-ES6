@@ -5,15 +5,13 @@ function Book(title, author, isbn) {
   this.author = author;
   this.isbn = isbn;
 };
-
-
 /* UI Constructor  */
 function UI() {}
 
 /* UI Prototype Methods */
 UI.prototype.addBookToList = function (book) {
   // Find the table
-  const list = document.querySelector("#book-list");
+  const list = document.getElementById("book-list");
 
   // Create tr element
   const row = document.createElement("tr");
@@ -22,48 +20,72 @@ UI.prototype.addBookToList = function (book) {
   row.innerHTML =
     `<td>${book.title}</td>
      <td>${book.author}</td>
-     <td>${book.isbn}</td>`;
+     <td>${book.isbn}</td>
+     <td><a href = "#" class = "delete">X</a></td>`;
 
   // Append to table
   list.appendChild(row);
 };
 
+//show Alert
+UI.prototype.showAlert = function (msg, className) {
+  //create alert div
+  const div = document.createElement("div");
+  div.className = `alert ${className}`;
+  div.appendChild(document.createTextNode(msg));
+
+  //find place for alert div
+  const container = document.querySelector(".container");
+  const form = document.querySelector("#book-form");
+
+  //palce alert div
+  container.insertBefore(div, form);
+
+  //set time for alert
+  setTimeout(function () {
+    document.querySelector(".alert").remove();
+  }, 3000);
+};
+
 // Clear fields
 UI.prototype.clearFields = function () {
-  document.querySelector("#title").value = "";
-  document.querySelector("#author").value = "";
-  document.querySelector("#isbn").value = "";
+  document.getElementById("title").value = "";
+  document.getElementById("author").value = "";
+  document.getElementById("isbn").value = "";
 };
 
 /* Event Listeners */
 document.getElementById("book-form").addEventListener("submit", (e) => {
   // Get form values
-  const title = document.querySelector("#title").value;
-  const author = document.querySelector("#author").value;
-  const isbn = document.querySelector("#isbn").value;
+  const title = document.getElementById("title").value;
+  const author = document.getElementById("author").value;
+  const isbn = document.getElementById("isbn").value;
 
-  if (title === "" || author === "" || isbn === "") {
-    alert ("Please fill all fields!");
-  }  else {
-  // Instance of book
-    const book = new Book(title, author, isbn);
+  //create new book
+  const book = new Book(title, author, isbn);
 
   // Instance of UI
   const ui = new UI();
 
-  // Add book to list
-  ui.addBookToList(book);
+  //validate
+  if (title === "" || author === "" || isbn === "") {
 
-  // Clear fields
+   ui.showAlert("Please fill in all fields!", "error");    
+    }  else {
+ 
+
+    // Add book to list
+   ui.addBookToList(book);
+   ui.showAlert("Book added", "success");
+  
+   // Clear fields
   ui.clearFields();
   }
 
-  // Prevent actual submit
+   // Prevent actual submit
   e.preventDefault();
-});
+ });
 
 
-//examples
-const potter = new Book("Harry Potter", "J. K. Rowling", 12345);
+ 
 
-console.log(potter);

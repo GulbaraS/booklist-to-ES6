@@ -58,6 +58,8 @@ UI.prototype.clearFields = function () {
 // delete books method
 UI.prototype.deleteBook = function(el) {
   if (el.classList.contains("delete")) {
+    const ui = new UI();
+    ui.showAlert("Book deleted", "delete-msg");
     el.parentElement.parentElement.remove();
   }
 };
@@ -66,7 +68,6 @@ UI.prototype.deleteBook = function(el) {
 document.querySelector("#book-list").addEventListener("click", (el) => {
  const ui = new UI();
  ui.deleteBook(el.target);
- ui.showAlert("Book deleted", "delete-msg");
  
 });
 
@@ -86,10 +87,17 @@ document.getElementById("book-form").addEventListener("submit", (e) => {
 
   //validate
   if (title === "" || author === "" || isbn === "") {
-
+   
    ui.showAlert("Please fill in all fields!", "error");    
-    }  else {
- 
+    } 
+    //validate isbn is number and 8 digits
+   else if(isNaN(isbn)) {
+     ui.showAlert("ISBN must be a number", "error");
+    document.getElementById("isbn").value = "";
+   } else if(isbn.length != 8) {
+     ui.showAlert("ISBN must have 8 digits", "error");
+     document.getElementById("isbn").value = "";
+   } else {
 
     // Add book to list
    ui.addBookToList(book);
@@ -101,8 +109,9 @@ document.getElementById("book-form").addEventListener("submit", (e) => {
 
    // Prevent actual submit
   e.preventDefault();
+
  });
 
-
+  
  
 
